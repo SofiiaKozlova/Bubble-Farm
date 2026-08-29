@@ -1,19 +1,42 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://c3f2v75b2tss3"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://diwi4exq4j5hg" path="res://scripts/Player.gd" id="1_player"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 20.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_p0vlq"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation_1",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"ц",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_player")
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
-color = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_player")
 
 [node name="BubbleHoldPoint" type="Marker2D" parent="."]
 position = Vector2(0, -35)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p0vlq")
+animation = &"ц"
