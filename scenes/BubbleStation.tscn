@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/BubbleStation.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/Bubble.tscn" id="2_bubble"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(180, 120)
+
+[node name="BubbleStation" type="Node2D"]
+script = ExtResource("1_script")
+bubble_scene = ExtResource("2_bubble")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_interaction")
+
+[node name="BubbleUI" type="CanvasLayer" parent="."]
+
+[node name="SizePanel" type="Panel" parent="BubbleUI"]
+offset_left = 300.0
+offset_top = 200.0
+offset_right = 600.0
+offset_bottom = 400.0
+
+[node name="SmallButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 60.0
+text = "Small"
+
+[node name="MediumButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 120.0
+offset_bottom = 120.0
+text = "Medium"
+
+[node name="LargeButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 20.0
+offset_top = 140.0
+offset_right = 120.0
+offset_bottom = 180.0
+text = "Large"
+
+[node name="CloseButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 150.0
+offset_top = 20.0
+offset_right = 250.0
+offset_bottom = 60.0
+text = "Close"
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
+[connection signal="pressed" from="BubbleUI/SizePanel/SmallButton" to="." method="_on_small_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/MediumButton" to="." method="_on_medium_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/LargeButton" to="." method="_on_large_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/CloseButton" to="." method="_on_close_button_pressed"]

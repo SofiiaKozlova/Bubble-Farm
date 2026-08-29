@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq3v5c5hkx55h"]
+
+[ext_resource type="Script" uid="uid://bwkvpk41dq7la" path="res://scripts/Bubble.gd" id="1_pmi0y"]
+
+[node name="Bubble" type="Area2D"]
+script = ExtResource("1_pmi0y")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.290196, 1, 0.92549, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

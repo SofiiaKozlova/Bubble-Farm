@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ShapeStation.gd" id="1_script"]
+
+[node name="ShapeStation" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="ShapeUI" type="CanvasLayer" parent="."]
+
+[node name="ShapePanel" type="Panel" parent="ShapeUI"]
+offset_left = 300.0
+offset_top = 200.0
+offset_right = 600.0
+offset_bottom = 400.0
+
+[node name="StarButton" type="Button" parent="ShapeUI/ShapePanel"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 60.0
+text = "Star"
+
+[node name="HeartButton" type="Button" parent="ShapeUI/ShapePanel"]
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 120.0
+offset_bottom = 120.0
+text = "Heart"
+
+[node name="DiamondButton" type="Button" parent="ShapeUI/ShapePanel"]
+offset_left = 20.0
+offset_top = 140.0
+offset_right = 120.0
+offset_bottom = 180.0
+text = "Diamond"
+
+[node name="CloseButton" type="Button" parent="ShapeUI/ShapePanel"]
+offset_left = 150.0
+offset_top = 20.0
+offset_right = 250.0
+offset_bottom = 60.0
+text = "Close"
+
+[connection signal="pressed" from="ShapeUI/ShapePanel/StarButton" to="." method="_on_star_button_pressed"]
+[connection signal="pressed" from="ShapeUI/ShapePanel/HeartButton" to="." method="_on_heart_button_pressed"]
+[connection signal="pressed" from="ShapeUI/ShapePanel/DiamondButton" to="." method="_on_diamond_button_pressed"]
+[connection signal="pressed" from="ShapeUI/ShapePanel/CloseButton" to="." method="_on_close_button_pressed"]
