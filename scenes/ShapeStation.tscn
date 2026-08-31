@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bix7wac1ynuds"]
 
-[ext_resource type="Script" path="res://scripts/ShapeStation.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dobj1ehepcmej" path="res://scripts/ShapeStation.gd" id="1_script"]
 
 [node name="ShapeStation" type="Node2D"]
 script = ExtResource("1_script")
@@ -14,6 +14,7 @@ offset_right = 600.0
 offset_bottom = 400.0
 
 [node name="StarButton" type="Button" parent="ShapeUI/ShapePanel"]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 120.0
@@ -21,6 +22,7 @@ offset_bottom = 60.0
 text = "Star"
 
 [node name="HeartButton" type="Button" parent="ShapeUI/ShapePanel"]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 80.0
 offset_right = 120.0
@@ -28,6 +30,7 @@ offset_bottom = 120.0
 text = "Heart"
 
 [node name="DiamondButton" type="Button" parent="ShapeUI/ShapePanel"]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 140.0
 offset_right = 120.0
@@ -35,6 +38,7 @@ offset_bottom = 180.0
 text = "Diamond"
 
 [node name="CloseButton" type="Button" parent="ShapeUI/ShapePanel"]
+layout_mode = 0
 offset_left = 150.0
 offset_top = 20.0
 offset_right = 250.0
