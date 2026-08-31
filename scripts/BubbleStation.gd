@@ -4,15 +4,14 @@ extends Node2D
 
 var player_near := false
 
-@onready var size_panel: Panel = $BubbleUI/SizePanel
+@onready var size_panel: Sprite2D = $BubbleUI/SizePanel
 
 
 func _ready():
-	# Меню приховане на початку
 	size_panel.visible = false
 	
-	# Початкова позиція меню на екрані
-	size_panel.position = Vector2(300, 200)
+	# Центр екрана
+	size_panel.position = get_viewport_rect().size / 2
 
 
 func _process(_delta):

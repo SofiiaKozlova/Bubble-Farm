@@ -1,19 +1,102 @@
-[gd_scene load_steps=11 format=3 uid="uid://exriuqnijb1a"]
+[gd_scene load_steps=54 format=3 uid="uid://exriuqnijb1a"]
 
 [ext_resource type="Script" uid="uid://cbw24pwsvv23m" path="res://scripts/BubbleStation.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bq3v5c5hkx55h" path="res://scenes/Bubble.tscn" id="2_bubble"]
 [ext_resource type="Texture2D" uid="uid://cfw4wnomwdgkv" path="res://assets/BubbleStation.png" id="3_e5uq8"]
 [ext_resource type="Texture2D" uid="uid://cw3ll6brvkwil" path="res://assets/Panel.png" id="4_4h7jg"]
 [ext_resource type="Texture2D" uid="uid://i2longp8ptt1" path="res://assets/cross.png" id="5_e5dls"]
+[ext_resource type="Texture2D" uid="uid://d230qcgffk48p" path="res://assets/BubbleStation_smallbutton.png" id="5_sx2f2"]
+[ext_resource type="Texture2D" uid="uid://j04eud8kjogi" path="res://assets/BubbleStation_middlebutton.png" id="6_vrk30"]
+[ext_resource type="Texture2D" uid="uid://dj6k2ajne1044" path="res://assets/BubbleStation_largebutton.png" id="7_km8ng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
-size = Vector2(266, 313)
+size = Vector2(142, 151)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3fntp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fnloe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gxow6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g43sj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xu1g0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ekico"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ng70p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iajb7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qf37x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v114c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b0ve"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2fmve"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u81bn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jiklb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cfw1d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37wbc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_scu86"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oa6yn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lnb5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtidg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h36fw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kodgv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wf42"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jk32t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rgo0g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kfjd8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_61lfb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bj7bq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u23xo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6j07x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_58gk2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mxyh0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pxsg8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sx2f2"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_alcw0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqall"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wq38p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jul05"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kpw15"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrk30"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rmbm"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km8ng"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mah8d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqhdm"]
 
@@ -27,7 +110,7 @@ texture = ExtResource("3_e5uq8")
 [node name="InteractionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-position = Vector2(-2, 2.5)
+position = Vector2(-2, -0.5)
 shape = SubResource("RectangleShape2D_interaction")
 
 [node name="BubbleUI" type="CanvasLayer" parent="."]
@@ -37,25 +120,58 @@ position = Vector2(593, 342)
 texture = ExtResource("4_4h7jg")
 
 [node name="SmallButton" type="Button" parent="BubbleUI/SizePanel"]
-offset_left = 77.0
-offset_top = -10.0
-offset_right = 177.0
-offset_bottom = 30.0
-text = "Small"
+offset_left = 79.0
+offset_top = -50.0
+offset_right = 189.0
+offset_bottom = 78.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3fntp")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_fnloe")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gxow6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_g43sj")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_xu1g0")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ekico")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ng70p")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_iajb7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qf37x")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_v114c")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3b0ve")
+icon = ExtResource("5_sx2f2")
 
 [node name="MediumButton" type="Button" parent="BubbleUI/SizePanel"]
-offset_left = -52.0
-offset_top = -8.0
-offset_right = 48.0
-offset_bottom = 32.0
-text = "Medium"
+offset_left = -57.0
+offset_top = -51.0
+offset_right = 53.0
+offset_bottom = 77.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2fmve")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_u81bn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_jiklb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_cfw1d")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_37wbc")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_scu86")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_oa6yn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8lnb5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_rtidg")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_h36fw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kodgv")
+icon = ExtResource("6_vrk30")
 
 [node name="LargeButton" type="Button" parent="BubbleUI/SizePanel"]
-offset_left = -185.0
-offset_top = -7.0
-offset_right = -85.0
-offset_bottom = 33.0
-text = "Large"
+offset_left = -190.0
+offset_top = -51.0
+offset_right = -80.0
+offset_bottom = 76.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8wf42")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_jk32t")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_rgo0g")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_kfjd8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_61lfb")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bj7bq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_u23xo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_6j07x")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_58gk2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mxyh0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pxsg8")
+icon = ExtResource("7_km8ng")
 
 [node name="CloseButton" type="Button" parent="BubbleUI/SizePanel"]
 offset_left = 185.0
@@ -63,8 +179,15 @@ offset_top = -145.0
 offset_right = 225.0
 offset_bottom = -105.0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_sx2f2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_alcw0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pqall")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wq38p")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_jul05")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_kpw15")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_vrk30")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7rmbm")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_km8ng")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mah8d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oqhdm")
 icon = ExtResource("5_e5dls")
 
