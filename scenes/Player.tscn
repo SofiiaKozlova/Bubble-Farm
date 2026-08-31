@@ -9,22 +9,22 @@ radius = 20.0
 animations = [{
 "frames": [],
 "loop": true,
-"name": &"new_animation",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"new_animation_1",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
 "name": &"walk_down",
 "speed": 5.0
 }, {
 "frames": [],
 "loop": true,
-"name": &"ц",
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_right",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_up",
 "speed": 5.0
 }]
 
@@ -39,4 +39,4 @@ position = Vector2(0, -35)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p0vlq")
-animation = &"ц"
+animation = &"walk_up"
