@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cghnstk5ru7sh"]
+[gd_scene load_steps=4 format=3 uid="uid://cghnstk5ru7sh"]
 
 [ext_resource type="Script" uid="uid://br6erq8lp2s5r" path="res://scripts/CustomerCounter.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dach73q5kt56g" path="res://assets/CustomerCounter.png" id="2_msf0g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_counter"]
 size = Vector2(180, 120)
@@ -8,14 +9,13 @@ size = Vector2(180, 120)
 [node name="CustomerCounter" type="Node2D"]
 script = ExtResource("1_script")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(1, 0.7, 0.3, 1)
-polygon = PackedVector2Array(-90, -60, 90, -60, 90, 60, -90, 60)
-
 [node name="InteractionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("RectangleShape2D_counter")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_msf0g")
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]

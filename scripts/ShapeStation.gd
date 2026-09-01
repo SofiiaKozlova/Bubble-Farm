@@ -18,18 +18,13 @@ func _process(_delta):
 	if player == null:
 		return
 
-	# Перевіряємо відстань до гравця
-	var distance = global_position.distance_to(player.global_position)
+	# Перевіряємо відстань до станції
+	var distance := global_position.distance_to(player.global_position)
 	player_near = distance <= interaction_distance
 
 	# Натиснуто E
-	if Input.is_action_just_pressed("interact"):
-		print("E PRESSED")
-		print("Distance: ", distance)
-		print("Player near: ", player_near)
-
-		if player_near:
-			open_shape_menu()
+	if player_near and Input.is_action_just_pressed("interact"):
+		open_shape_menu()
 
 
 func open_shape_menu():
@@ -39,13 +34,19 @@ func open_shape_menu():
 		print("Player not found!")
 		return
 
-	# Перевіряємо, чи гравець тримає бульбашку
+	# Гравець повинен тримати бульбашку
 	if player.carried_bubble == null:
 		print("Player is not carrying a bubble!")
 		return
 
+	var bubble = player.carried_bubble
+
+	print("Opening Shape Station")
+	print("Current shape: ", bubble.current_shape)
+	print("Current radius: ", bubble.radius)
+
+	# Показуємо меню
 	shape_panel.visible = true
-	print("Shape menu opened!")
 
 
 func change_bubble_shape(shape: String):
@@ -61,13 +62,15 @@ func change_bubble_shape(shape: String):
 		print("No bubble!")
 		return
 
-	# Змінюємо форму
+	# Змінюємо форму вже існуючої бульбашки
 	bubble.change_shape(shape)
+
+	# Розмір бульбашки залишається без змін
+	print("Bubble shape changed to: ", shape)
+	print("Bubble radius: ", bubble.radius)
 
 	# Закриваємо меню
 	shape_panel.visible = false
-
-	print("Bubble shape changed to: ", shape)
 
 
 func _on_star_button_pressed():

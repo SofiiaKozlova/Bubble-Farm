@@ -192,3 +192,8 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_revt2")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_x4ki7")
 icon = ExtResource("7_tgtka")
 metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="BubbleUI/SizePanel/DiamondButton" to="." method="_on_diamond_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/HeartButton" to="." method="_on_heart_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/StarButton" to="." method="_on_star_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/CloseButton" to="." method="_on_close_button_pressed"]
