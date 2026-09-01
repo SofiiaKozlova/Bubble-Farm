@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b18s1ovxqhwk"
-path="res://.godot/imported/1.png-68cd07b187b75778b2c3af8d7c6401a2.ctex"
+uid="uid://cear2oh31vu5f"
+path="res://.godot/imported/ShapeStation_heart.png-dc20829530be02cf75eb65b71f59a822.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/1.png"
-dest_files=["res://.godot/imported/1.png-68cd07b187b75778b2c3af8d7c6401a2.ctex"]
+source_file="res://assets/ShapeStation_heart.png"
+dest_files=["res://.godot/imported/ShapeStation_heart.png-dc20829530be02cf75eb65b71f59a822.ctex"]
 
 [params]
 

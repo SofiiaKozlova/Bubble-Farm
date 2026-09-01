@@ -136,6 +136,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_qf37x")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_v114c")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3b0ve")
 icon = ExtResource("5_sx2f2")
+metadata/_edit_use_anchors_ = true
 
 [node name="MediumButton" type="Button" parent="BubbleUI/SizePanel"]
 offset_left = -57.0
@@ -154,6 +155,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_rtidg")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_h36fw")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_kodgv")
 icon = ExtResource("6_vrk30")
+metadata/_edit_use_anchors_ = true
 
 [node name="LargeButton" type="Button" parent="BubbleUI/SizePanel"]
 offset_left = -190.0
@@ -172,6 +174,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_58gk2")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mxyh0")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_pxsg8")
 icon = ExtResource("7_km8ng")
+metadata/_edit_use_anchors_ = true
 
 [node name="CloseButton" type="Button" parent="BubbleUI/SizePanel"]
 offset_left = 185.0
@@ -190,6 +193,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_km8ng")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mah8d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oqhdm")
 icon = ExtResource("5_e5dls")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]

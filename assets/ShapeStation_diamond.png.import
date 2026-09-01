@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl470l7i5in48"
-path="res://.godot/imported/BubbleStation_largebutton.png-8eef0acdcb0ce51914136c2394a2a021.ctex"
+uid="uid://l3542wckks1i"
+path="res://.godot/imported/ShapeStation_diamond.png-18d274de5fb8710f31b8680f4b0d68b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/BubbleStation_largebutton.png"
-dest_files=["res://.godot/imported/BubbleStation_largebutton.png-8eef0acdcb0ce51914136c2394a2a021.ctex"]
+source_file="res://assets/ShapeStation_diamond.png"
+dest_files=["res://.godot/imported/ShapeStation_diamond.png-18d274de5fb8710f31b8680f4b0d68b4.ctex"]
 
 [params]
 
