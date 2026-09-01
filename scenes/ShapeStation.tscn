@@ -193,6 +193,8 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_x4ki7")
 icon = ExtResource("7_tgtka")
 metadata/_edit_use_anchors_ = true
 
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
 [connection signal="pressed" from="BubbleUI/SizePanel/DiamondButton" to="." method="_on_diamond_button_pressed"]
 [connection signal="pressed" from="BubbleUI/SizePanel/HeartButton" to="." method="_on_heart_button_pressed"]
 [connection signal="pressed" from="BubbleUI/SizePanel/StarButton" to="." method="_on_star_button_pressed"]

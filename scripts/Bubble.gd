@@ -19,10 +19,13 @@ func create_shape():
 	match current_shape:
 		"circle":
 			create_circle()
+
 		"star":
 			create_star()
+
 		"heart":
 			create_heart()
+
 		"diamond":
 			create_diamond()
 
@@ -77,10 +80,12 @@ func create_heart():
 		var t = TAU * i / 30.0
 
 		var x = 16.0 * pow(sin(t), 3)
-		var y = -(13.0 * cos(t) \
-			- 5.0 * cos(2.0 * t) \
-			- 2.0 * cos(3.0 * t) \
-			- cos(4.0 * t))
+		var y = -(
+			13.0 * cos(t)
+			- 5.0 * cos(2.0 * t)
+			- 2.0 * cos(3.0 * t)
+			- cos(4.0 * t)
+		)
 
 		var point = Vector2(x, y) * (radius / 17.0)
 		points.append(point)
@@ -89,17 +94,24 @@ func create_heart():
 
 
 func change_shape(shape: String):
+	# Змінюємо тільки форму
+	# radius залишається тим самим
 	current_shape = shape
 	create_shape()
 
 
+func change_color(new_color: Color):
+	# Змінюємо колір вже існуючої бульбашки
+	polygon2d.color = new_color
+
+
 func _on_body_entered(body):
-	if body.name == "Player":
+	if body.is_in_group("player"):
 		player_near = true
 
 
 func _on_body_exited(body):
-	if body.name == "Player":
+	if body.is_in_group("player"):
 		player_near = false
 
 

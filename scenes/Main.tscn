@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b15rw2j3yvqg1"]
+[gd_scene load_steps=15 format=3 uid="uid://b15rw2j3yvqg1"]
 
 [ext_resource type="Script" uid="uid://bkhgpbtafo4ak" path="res://scripts/Main.gd" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://exriuqnijb1a" path="res://scenes/BubbleStation.tscn" id="2_0bbpv"]
@@ -6,7 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://cghnstk5ru7sh" path="res://scenes/CustomerCounter.tscn" id="3_c01mt"]
 [ext_resource type="Texture2D" uid="uid://c0dvg33j0wf10" path="res://assets/Background.png" id="3_rarhs"]
 [ext_resource type="PackedScene" uid="uid://bix7wac1ynuds" path="res://scenes/ShapeStation.tscn" id="4_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://ve4p7j05noug" path="res://scenes/PainterStation.tscn" id="5_jlsqs"]
 [ext_resource type="Script" uid="uid://c0r7m7uucgl3q" path="res://scripts/UI.gd" id="6_c01mt"]
+[ext_resource type="Texture2D" uid="uid://cywe3fhsqic5s" path="res://assets/Money_cloud.png" id="9_q8u5g"]
+[ext_resource type="AudioStream" uid="uid://dcythyfccjt3t" path="res://music/Bubble_music.mp3" id="10_lhr70"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rarhs"]
 size = Vector2(23, 626)
@@ -23,25 +26,32 @@ size = Vector2(1154, 20)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_elqb8")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(417, -288)
+texture = ExtResource("9_q8u5g")
+
 [node name="Workshop" type="Node2D" parent="."]
 
 [node name="Stations" type="Node2D" parent="Workshop"]
 
 [node name="BubbleStation" parent="Workshop/Stations" instance=ExtResource("2_0bbpv")]
-position = Vector2(285, -56)
+position = Vector2(294, -129)
 
 [node name="ShapeStation" parent="Workshop/Stations" instance=ExtResource("4_nxtc6")]
-position = Vector2(171, 120)
+position = Vector2(135, -127)
 
 [node name="CustomerCounter" parent="Workshop/Stations" instance=ExtResource("3_c01mt")]
 position = Vector2(-368, 16)
+
+[node name="PainterStation" parent="Workshop/Stations" instance=ExtResource("5_jlsqs")]
+position = Vector2(456, -128)
 
 [node name="Floor" type="Node2D" parent="Workshop"]
 z_index = -10
 
 [node name="Sprite2D" type="Sprite2D" parent="Workshop/Floor"]
 z_index = -1
-position = Vector2(61.0001, 1)
+position = Vector2(63, -5.99997)
 scale = Vector2(0.828141, 0.634167)
 texture = ExtResource("3_rarhs")
 
@@ -82,7 +92,12 @@ offset_left = 966.0
 offset_top = 12.0
 offset_right = 1059.0
 offset_bottom = 88.0
-theme_override_font_sizes/font_size = 50
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
 text = "$0"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_lhr70")
+autoplay = true

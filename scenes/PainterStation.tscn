@@ -1,3 +1,201 @@
-[gd_scene format=3 uid="uid://ve4p7j05noug"]
+[gd_scene load_steps=53 format=3 uid="uid://ve4p7j05noug"]
+
+[ext_resource type="Script" uid="uid://bpdtkeadtp6pv" path="res://scripts/PainterStation.gd" id="1_ix2bl"]
+[ext_resource type="Texture2D" uid="uid://cw3ll6brvkwil" path="res://assets/Panel.png" id="2_ix2bl"]
+[ext_resource type="Texture2D" uid="uid://cu6uesv15mt1v" path="res://assets/PainterStation.png" id="2_vfxal"]
+[ext_resource type="Texture2D" uid="uid://cdfshnvb8ur4a" path="res://assets/PainterStation_green.png" id="3_vfxal"]
+[ext_resource type="Texture2D" uid="uid://c4iv182n64d4b" path="res://assets/PainterStation_yellow.png" id="4_oinw3"]
+[ext_resource type="Texture2D" uid="uid://dpwbthplgaoce" path="res://assets/PainterStation_red.png" id="5_vcci3"]
+[ext_resource type="Texture2D" uid="uid://i2longp8ptt1" path="res://assets/cross.png" id="6_4ho8k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pkb8c"]
+size = Vector2(142, 151)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_okk08"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_of7e7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_edy6o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ge6ag"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6bf3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2tdo8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_itwl4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7tvw4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_646yf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4akwu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6k3sk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_an6st"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eswqi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rp8c3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g5jeb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8k8un"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_alqfm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_in7fl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cw7k6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_binw0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eekb8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r736d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nufos"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bkdgx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7lt2k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b5f18"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sgqu6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hac7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rdix"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0te3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wte2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_inaqq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kbui3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j1d8g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_peno0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qb0ff"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xhjcq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lvqv7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yfhjh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nflr8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5g0eg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_epg1f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_180gc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2h0gt"]
 
 [node name="PainterStation" type="Node2D"]
+script = ExtResource("1_ix2bl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_vfxal")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-2, -0.5)
+shape = SubResource("RectangleShape2D_pkb8c")
+
+[node name="BubbleUI" type="CanvasLayer" parent="."]
+
+[node name="SizePanel" type="Sprite2D" parent="BubbleUI"]
+position = Vector2(593, 342)
+texture = ExtResource("2_ix2bl")
+
+[node name="GreenButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 79.0
+offset_top = -50.0
+offset_right = 189.0
+offset_bottom = 78.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_okk08")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_of7e7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_edy6o")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ge6ag")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_y6bf3")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2tdo8")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_itwl4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7tvw4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_646yf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4akwu")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6k3sk")
+icon = ExtResource("3_vfxal")
+metadata/_edit_use_anchors_ = true
+
+[node name="YellowButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = -57.0
+offset_top = -51.0
+offset_right = 53.0
+offset_bottom = 77.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_an6st")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_eswqi")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_rp8c3")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_g5jeb")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8k8un")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_alqfm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_in7fl")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_cw7k6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_binw0")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eekb8")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r736d")
+icon = ExtResource("4_oinw3")
+metadata/_edit_use_anchors_ = true
+
+[node name="RedButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = -190.0
+offset_top = -51.0
+offset_right = -80.0
+offset_bottom = 76.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nufos")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_bkdgx")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7lt2k")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_b5f18")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_sgqu6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_hac7q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_7rdix")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_a0te3")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0wte2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_inaqq")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kbui3")
+icon = ExtResource("5_vcci3")
+metadata/_edit_use_anchors_ = true
+
+[node name="CloseButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 185.0
+offset_top = -145.0
+offset_right = 225.0
+offset_bottom = -105.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j1d8g")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_peno0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qb0ff")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_xhjcq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_lvqv7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_yfhjh")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_nflr8")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_5g0eg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_epg1f")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_180gc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2h0gt")
+icon = ExtResource("6_4ho8k")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
+[connection signal="pressed" from="BubbleUI/SizePanel/GreenButton" to="." method="_on_green_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/YellowButton" to="." method="_on_yellow_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/RedButton" to="." method="_on_red_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/CloseButton" to="." method="_on_close_button_pressed"]
