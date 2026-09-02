@@ -1,6 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://bxp5w2y445ail"]
+[gd_scene load_steps=34 format=3 uid="uid://bxp5w2y445ail"]
 
 [ext_resource type="Texture2D" uid="uid://wlirujsyr3fu" path="res://assets/customers/customer_1/idle_down.png" id="1_0vnnx"]
+[ext_resource type="Script" uid="uid://dmunbd10gq1fd" path="res://scripts/Customer.gd" id="1_qbs0a"]
 [ext_resource type="Texture2D" uid="uid://b5555bhnv71k2" path="res://assets/customers/customer_1/walk_right/1.png" id="2_kafua"]
 [ext_resource type="Texture2D" uid="uid://knfjk6hgu0ff" path="res://assets/customers/customer_1/walk_down/1.png" id="3_8nssl"]
 [ext_resource type="Texture2D" uid="uid://67thsp177n5t" path="res://assets/customers/customer_1/walk_down/2.png" id="4_w64q2"]
@@ -28,8 +29,8 @@
 [ext_resource type="Texture2D" uid="uid://bawjq8qk014o8" path="res://assets/customers/customer_4/walk_down/2.png" id="26_nuxh6"]
 [ext_resource type="Texture2D" uid="uid://b72vn0enx7fc0" path="res://assets/customers/customer_4/walk_down/3.png" id="27_kow68"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_c1mgu"]
-radius = 20.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_61doa"]
+size = Vector2(32, 81)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8i6j8"]
 animations = [{
@@ -240,10 +241,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Customer" type="Node2D"]
+[node name="Customer" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_qbs0a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_c1mgu")
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_61doa")
 
 [node name="BubbleHoldPoint" type="Marker2D" parent="."]
 position = Vector2(0, -35)
@@ -257,6 +262,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_vyivy")
 animation = &"walk_right"
 frame_progress = 0.217719

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b15rw2j3yvqg1"]
+[gd_scene load_steps=17 format=3 uid="uid://b15rw2j3yvqg1"]
 
 [ext_resource type="Script" uid="uid://bkhgpbtafo4ak" path="res://scripts/Main.gd" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://exriuqnijb1a" path="res://scenes/BubbleStation.tscn" id="2_0bbpv"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://c0r7m7uucgl3q" path="res://scripts/UI.gd" id="6_c01mt"]
 [ext_resource type="Texture2D" uid="uid://cywe3fhsqic5s" path="res://assets/Money_cloud.png" id="9_q8u5g"]
 [ext_resource type="AudioStream" uid="uid://dcythyfccjt3t" path="res://music/Bubble_music.mp3" id="10_lhr70"]
+[ext_resource type="Script" uid="uid://cgcvhbpkdgic2" path="res://scripts/CustomerManager.gd" id="11_wp0k4"]
+[ext_resource type="PackedScene" uid="uid://bxp5w2y445ail" path="res://scenes/Customer.tscn" id="12_bjd11"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rarhs"]
 size = Vector2(23, 626)
@@ -101,3 +103,7 @@ text = "$0"
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_lhr70")
 autoplay = true
+
+[node name="CustomerManager" type="Node2D" parent="."]
+script = ExtResource("11_wp0k4")
+customer_scene = ExtResource("12_bjd11")

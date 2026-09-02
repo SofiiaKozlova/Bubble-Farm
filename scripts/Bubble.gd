@@ -101,7 +101,11 @@ func change_shape(shape: String):
 	create_shape()
 
 
-func change_color(new_color: String):
+func change_color(new_color):
+	if new_color is Color:
+		polygon2d.color = new_color
+		return
+
 	current_color = new_color
 	update_color()
 

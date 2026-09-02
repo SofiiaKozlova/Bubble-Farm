@@ -18,12 +18,10 @@ func _process(_delta):
 	if player == null:
 		return
 
-	# Перевіряємо відстань до PainterStation
 	var distance: float = global_position.distance_to(player.global_position)
 
 	player_near = distance <= interaction_distance
 
-	# Натиснуто E
 	if player_near and Input.is_action_just_pressed("interact"):
 		open_color_menu()
 
@@ -43,11 +41,13 @@ func open_color_menu():
 
 	print("Bubble radius: ", bubble.radius)
 	print("Current shape: ", bubble.current_shape)
+	print("Current color: ", bubble.current_color)
 
 	color_panel.visible = true
 	print("Color menu opened!")
 
-func change_bubble_color(new_color: Color):
+
+func change_bubble_color(new_color: String):
 	var player = get_tree().get_first_node_in_group("player")
 
 	if player == null:
@@ -60,7 +60,7 @@ func change_bubble_color(new_color: Color):
 		print("No bubble!")
 		return
 
-	# Змінюємо колір існуючої бульбашки
+	# Змінюємо назву кольору в бульбашці
 	bubble.change_color(new_color)
 
 	print("Bubble color changed to: ", new_color)
@@ -72,15 +72,15 @@ func change_bubble_color(new_color: Color):
 
 
 func _on_green_button_pressed():
-	change_bubble_color(Color("#4CAF50"))
+	change_bubble_color("green")
 
 
 func _on_yellow_button_pressed():
-	change_bubble_color(Color("#FFD740"))
+	change_bubble_color("yellow")
 
 
 func _on_red_button_pressed():
-	change_bubble_color(Color("#F44336"))
+	change_bubble_color("red")
 
 
 func _on_close_button_pressed():

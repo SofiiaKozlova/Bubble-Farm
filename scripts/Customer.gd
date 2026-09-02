@@ -2,25 +2,42 @@ extends CharacterBody2D
 
 @export var speed := 80.0
 
+# Точка, де клієнт зупиняється біля стійки
 var target_position := Vector2.ZERO
+
+# Точка виходу
 var exit_position := Vector2.ZERO
 
-var order_size := "medium"
-var order_shape := "circle"
-var order_color := "blue"
+# Поточний стан клієнта
+var state := "walking_to_counter"
 
-var last_direction := "down"
-var state := "going_to_counter"
+# Номер типу клієнта: 1, 2, 3 або 4
+var customer_type := 0
 
+# Останній напрямок
+var last_direction := "right"
+
+# Замовлення
+var order_size := ""
+var order_shape := ""
+var order_color := ""
+
+# Посилання на CustomerCounter
 var customer_counter = null
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var order_bubble = $OrderBubble
+# 4 картинки клієнтів
+@onready var sprite1: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite2: AnimatedSprite2D = $AnimatedSprite2D2
+@onready var sprite3: AnimatedSprite2D = $AnimatedSprite2D3
+@onready var sprite4: AnimatedSprite2D = $AnimatedSprite2D4
+
+# Текст замовлення
+@onready var order_label: Label = $Label
 
 
 const SIZES = [
 	"small",
-	"medium",
+	"middle",
 	"large"
 ]
 
@@ -33,28 +50,89 @@ const SHAPES = [
 
 const COLORS = [
 	"blue",
-	"green",
 	"yellow",
+	"green",
 	"red"
 ]
 
 
 func _ready():
+
+	# Випадковий тип клієнта
+	customer_type = randi_range(1, 4)
+
+	setup_customer_type()
+
+	# Випадкове замовлення
 	generate_order()
+
+	# Знаходимо CustomerCounter
+	customer_counter = get_tree().get_first_node_in_group("customer_counter")
+
+	if customer_counter != null:
+
+		# Клієнт зупиняється зліва від столика
+		target_position = customer_counter.global_position + Vector2(-110, 0)
+
+	# Замовлення спочатку приховане
+	order_label.visible = false
+
+
+func setup_customer_type():
+
+	var sprites = [
+		sprite1,
+		sprite2,
+		sprite3,
+		sprite4
+	]
+
+	# Вимикаємо всіх клієнтів
+	for sprite in sprites:
+		sprite.visible = false
+		sprite.stop()
+
+	# Вмикаємо випадкового
+	var selected_sprite = sprites[customer_type - 1]
+
+	selected_sprite.visible = true
+
+	# Починаємо з ходьби вправо
+	selected_sprite.play("walk_right")
+
+
+func get_active_sprite() -> AnimatedSprite2D:
+
+	match customer_type:
+
+		1:
+			return sprite1
+
+		2:
+			return sprite2
+
+		3:
+			return sprite3
+
+		4:
+			return sprite4
+
+	return sprite1
 
 
 func generate_order():
+
 	order_size = SIZES.pick_random()
 	order_shape = SHAPES.pick_random()
 	order_color = COLORS.pick_random()
 
-	order_bubble.setup_order(
-		order_size,
-		order_shape,
-		order_color
+	order_label.text = (
+		order_size
+		+ ", "
+		+ order_shape
+		+ ", "
+		+ order_color
 	)
-
-	order_bubble.visible = true
 
 	print(
 		"Customer order: ",
@@ -70,139 +148,128 @@ func _physics_process(_delta):
 
 	match state:
 
-		"going_to_counter":
+		"walking_to_counter":
 			move_to_counter()
 
 		"waiting":
 			velocity = Vector2.ZERO
-			play_idle()
 
-		"going_to_exit":
+			play_idle_right()
+
+		"walking_to_exit":
 			move_to_exit()
 
 
 func move_to_counter():
 
+	# Дійшов до стійки
 	if global_position.distance_to(target_position) <= 5.0:
+
+		global_position = target_position
 
 		velocity = Vector2.ZERO
 
 		state = "waiting"
 
-		# Знаходимо CustomerCounter
-		customer_counter = get_tree().get_first_node_in_group("customer_counter")
+		play_idle_right()
 
-		if customer_counter:
+		# Показуємо замовлення
+		order_label.visible = true
+
+		# Повідомляємо CustomerCounter
+		if customer_counter != null:
 			customer_counter.customer_arrived(self)
 
-		print("Customer waiting for order")
+		print("Customer arrived at counter")
 
 		return
 
-	var direction := global_position.direction_to(target_position)
-
-	velocity = direction * speed
+	# Рухаємося тільки вправо
+	velocity = Vector2.RIGHT * speed
 
 	move_and_slide()
 
-	play_walk(direction)
+	get_active_sprite().play("walk_right")
+
+
+func play_idle_right():
+
+	var sprite = get_active_sprite()
+
+	if sprite.animation != "idle_right":
+		sprite.play("idle_right")
 
 
 func move_to_exit():
 
-	if global_position.distance_to(exit_position) <= 5.0:
+	# Клієнт вийшов за нижню частину екрану
+	if global_position.y > exit_position.y:
 
 		velocity = Vector2.ZERO
 
-		if customer_counter:
+		# Повідомляємо Counter
+		if customer_counter != null:
 			customer_counter.customer_left(self)
+
+		# Повідомляємо Manager
+		var customer_manager = get_tree().get_first_node_in_group("customer_manager")
+
+		if customer_manager != null:
+			customer_manager.customer_left(self)
 
 		queue_free()
 
 		return
 
-	var direction := global_position.direction_to(exit_position)
-
-	velocity = direction * speed
+	# Рух вниз
+	velocity = Vector2.DOWN * speed
 
 	move_and_slide()
 
-	play_walk(direction)
-
-
-func play_walk(direction: Vector2):
-
-	if abs(direction.x) > abs(direction.y):
-
-		if direction.x < 0:
-			last_direction = "left"
-			play_animation("walk_left")
-		else:
-			last_direction = "right"
-			play_animation("walk_right")
-
-	else:
-
-		if direction.y < 0:
-			last_direction = "up"
-			play_animation("walk_up")
-		else:
-			last_direction = "down"
-			play_animation("walk_down")
-
-
-func play_idle():
-	play_animation("idle_" + last_direction)
-
-
-func play_animation(animation_name: String):
-
-	if animated_sprite.animation != animation_name:
-		animated_sprite.play(animation_name)
+	get_active_sprite().play("walk_down")
 
 
 func receive_bubble(player, bubble) -> bool:
 
-	# Перевіряємо РОЗМІР
-	if bubble.get_size_name() != order_size:
+	# Отримуємо характеристики бульбашки
+	var bubble_size = bubble.get_size_name()
+	var bubble_shape = bubble.current_shape
+	var bubble_color = bubble.current_color
 
-		print("Wrong size!")
-		print("Needed: ", order_size)
-		print("Received: ", bubble.get_size_name())
+	print("========== CHECK ORDER ==========")
+	print("Customer wants:")
+	print("Size: ", order_size)
+	print("Shape: ", order_shape)
+	print("Color: ", order_color)
 
+	print("Bubble has:")
+	print("Size: ", bubble_size)
+	print("Shape: ", bubble_shape)
+	print("Color: ", bubble_color)
+
+	# Перевірка розміру
+	if bubble_size != order_size:
+		print("WRONG SIZE")
 		return false
 
-
-	# Перевіряємо ФОРМУ
-	if bubble.current_shape != order_shape:
-
-		print("Wrong shape!")
-		print("Needed: ", order_shape)
-		print("Received: ", bubble.current_shape)
-
+	# Перевірка форми
+	if bubble_shape != order_shape:
+		print("WRONG SHAPE")
 		return false
 
-
-	# Перевіряємо КОЛІР
-	if bubble.current_color != order_color:
-
-		print("Wrong color!")
-		print("Needed: ", order_color)
-		print("Received: ", bubble.current_color)
-
+	# Перевірка кольору
+	if bubble_color != order_color:
+		print("WRONG COLOR")
 		return false
 
-
-	# Тут замовлення правильне
+	# Якщо всі три параметри правильні
 	print("CORRECT ORDER!")
 
-
-	# Забираємо bubble у Player
+	# Забираємо бульбашку у гравця
 	player.carried_bubble = null
-
 	bubble.carried = false
 
-	# Передаємо bubble клієнту
+	# Бульбашка переходить до клієнта
 	bubble.reparent(self)
 
 	if has_node("BubbleHoldPoint"):
@@ -210,18 +277,15 @@ func receive_bubble(player, bubble) -> bool:
 	else:
 		bubble.position = Vector2(0, -40)
 
-
 	# Ховаємо замовлення
-	order_bubble.visible = false
-
+	order_label.visible = false
 
 	# Даємо гроші
 	GameManager.money += 10
 
 	print("Money: ", GameManager.money)
 
-
-	# Клієнт іде до виходу
-	state = "going_to_exit"
+	# Клієнт виходить
+	state = "walking_to_exit"
 
 	return true
