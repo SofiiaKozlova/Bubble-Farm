@@ -8,11 +8,14 @@ extends Area2D
 
 var player_near := false
 var carried := false
+
 var current_shape := "circle"
+var current_color := "blue"
 
 
 func _ready():
 	create_shape()
+	update_color()
 
 
 func create_shape():
@@ -94,15 +97,52 @@ func create_heart():
 
 
 func change_shape(shape: String):
-	# Змінюємо тільки форму
-	# radius залишається тим самим
 	current_shape = shape
 	create_shape()
 
 
-func change_color(new_color: Color):
-	# Змінюємо колір вже існуючої бульбашки
-	polygon2d.color = new_color
+func change_color(new_color: String):
+	current_color = new_color
+	update_color()
+
+
+func update_color():
+	match current_color:
+		"blue":
+			polygon2d.color = Color("#4FC3F7")
+
+		"green":
+			polygon2d.color = Color("#66BB6A")
+
+		"yellow":
+			polygon2d.color = Color("#FDD835")
+
+		"red":
+			polygon2d.color = Color("#EF5350")
+
+
+func set_size(size_name: String):
+	match size_name:
+		"small":
+			radius = 8.0
+
+		"medium":
+			radius = 14.0
+
+		"large":
+			radius = 20.0
+
+	create_shape()
+
+
+func get_size_name() -> String:
+	if radius <= 9.0:
+		return "small"
+
+	if radius <= 16.0:
+		return "medium"
+
+	return "large"
 
 
 func _on_body_entered(body):
@@ -116,24 +156,19 @@ func _on_body_exited(body):
 
 
 func pick_up():
-	print("Trying to pick up")
-
 	var player = get_tree().get_first_node_in_group("player")
 
 	if player == null:
-		print("Player not found")
 		return
 
 	if player.carried_bubble != null:
-		print("Player already has bubble")
 		return
-
-	print("Bubble picked")
 
 	player.carried_bubble = self
 	carried = true
 
 	reparent(player)
+
 	position = player.get_node("BubbleHoldPoint").position
 
 
