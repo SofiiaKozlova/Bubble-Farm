@@ -267,9 +267,7 @@ position = Vector2(0, -35)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8i6j8")
-animation = &"walk_down"
-frame = 3
-frame_progress = 0.333778
+animation = &"idle_right"
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
@@ -278,8 +276,7 @@ offset_bottom = 23.0
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 visible = false
 sprite_frames = SubResource("SpriteFrames_vyivy")
-animation = &"walk_right"
-frame_progress = 0.217719
+animation = &"idle_right"
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
 visible = false
