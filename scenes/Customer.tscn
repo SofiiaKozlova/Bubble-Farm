@@ -257,7 +257,6 @@ animations = [{
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_qbs0a")
-speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)
