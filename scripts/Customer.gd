@@ -244,7 +244,7 @@ func play_idle_right():
 		return
 
 	# Перемикаємо на idle_down
-	sprite.animation = "idle_right"
+	sprite.animation = "idle_right"h
 
 	# Перший кадр
 	sprite.frame = 0
