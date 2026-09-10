@@ -34,7 +34,7 @@ var customer_counter = null
 
 const SIZES = [
 	"small",
-	"middle",
+	"medium",
 	"large"
 ]
 

@@ -1,8 +1,9 @@
 extends Node2D
 
 
-const PRICE := 30
+@export var price := 10
 
+var remaining_price := 0
 var player_near := false
 var purchased := false
 
@@ -18,51 +19,39 @@ var purchased := false
 
 func _ready():
 
-	# Квіти спочатку приховані
+	# Початкова сума, яку треба заплатити
+	remaining_price = price
+
+	# Квіти приховані
 	flowers.visible = false
 
-	# Ціна
-	price_label.text = str(PRICE)
+	# Показуємо, скільки ще треба заплатити
+	price_label.text = str(remaining_price)
 
-	# -------------------------
-	# РОЗТАШУВАННЯ ЦІНИ І МОНЕТКИ
-	# -------------------------
-
-	# Цифра зліва
-	price_label.position = Vector2(-45, -12)
+	# Напис
+	price_label.position = Vector2(-55, -12)
 	price_label.size = Vector2(60, 24)
-
-	# Вирівнюємо число вправо
 	price_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
-	# Монетка завжди в одному місці
-	coin.position = Vector2(25, 0)
+	# Монетку НЕ рухаємо.
+	# Вона залишається там, де ти поставила її в сцені.
 
 
-	# -------------------------
-	# КВІТИ
-	# -------------------------
-
-	flowers.visible = false
-
-
-	# -------------------------
-	# БАР'ЄР
-	# -------------------------
-
-	# Спочатку бар'єр вимкнений
+	# Бар'єр спочатку вимкнений
 	flower_barrier.visible = false
 
 	flower_barrier.set_collision_layer_value(1, false)
 	flower_barrier.set_collision_mask_value(1, false)
 
 
-	# -------------------------
-	# INTERACTION AREA
-	# -------------------------
+	# InteractionArea
+	interaction_area.body_entered.connect(
+		_on_interaction_area_body_entered
+	)
 
-	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
-	interaction_area.body_exited.connect(_on_interaction_area_body_exited)
+	interaction_area.body_exited.connect(
+		_on_interaction_area_body_exited
+	)
 
 
 func _process(_delta):
@@ -79,44 +68,60 @@ func buy_decoration():
 		return
 
 
-	# -------------------------
-	# ЗАБИРАЄМО 30 ЄВРО
-	# -------------------------
-
-	GameManager.money -= PRICE
-
-	print("Decoration purchased!")
-	print("Money: ", GameManager.money)
+	# Якщо грошей немає
+	if GameManager.money <= 0:
+		print("No money to pay")
+		return
 
 
-	# Позначаємо як куплене
-	purchased = true
+	# Скільки можемо заплатити зараз
+	var payment = min(
+		GameManager.money,
+		remaining_price
+	)
 
 
-	# -------------------------
-	# ХОВАЄМО ЦІНУ
-	# -------------------------
+	# Віднімаємо гроші у гравця
+	GameManager.money -= payment
 
-	point.visible = false
-	coin.visible = false
-	price_label.visible = false
+	# Зменшуємо залишок ціни
+	remaining_price -= payment
 
 
-	# -------------------------
-	# ПОКАЗУЄМО КВІТИ
-	# -------------------------
-
-	flowers.visible = true
+	print("Paid: ", payment)
+	print("Money left: ", GameManager.money)
+	print("Remaining price: ", remaining_price)
 
 
-	# -------------------------
-	# ВМИКАЄМО БАР'ЄР
-	# -------------------------
+	# Оновлюємо напис
+	price_label.text = str(remaining_price)
 
-	flower_barrier.visible = true
 
-	flower_barrier.set_collision_layer_value(1, true)
-	flower_barrier.set_collision_mask_value(1, true)
+	# Якщо все оплачено
+	if remaining_price <= 0:
+
+		remaining_price = 0
+
+		purchased = true
+
+		print("Decoration fully paid!")
+
+
+		# Ховаємо покупку
+		point.visible = false
+		coin.visible = false
+		price_label.visible = false
+
+
+		# Показуємо квіти
+		flowers.visible = true
+
+
+		# Вмикаємо бар'єр
+		flower_barrier.visible = true
+
+		flower_barrier.set_collision_layer_value(1, true)
+		flower_barrier.set_collision_mask_value(1, true)
 
 
 func _on_interaction_area_body_entered(body):
