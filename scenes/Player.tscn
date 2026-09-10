@@ -18,8 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://dv4yw8rdriops" path="res://assets/player/walk_up/1.png" id="16_ebwui"]
 [ext_resource type="Texture2D" uid="uid://deor4b7c7xrac" path="res://assets/player/walk_up/2.png" id="17_sfy4j"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
-radius = 20.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfpux"]
+size = Vector2(24, 5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p0vlq"]
 animations = [{
@@ -116,7 +116,8 @@ animations = [{
 script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_player")
+position = Vector2(1, 38.5)
+shape = SubResource("RectangleShape2D_jfpux")
 
 [node name="BubbleHoldPoint" type="Marker2D" parent="."]
 position = Vector2(0, -35)
