@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://deo6arff4gchc"]
+
+[ext_resource type="Texture2D" uid="uid://drkosd07g33xo" path="res://assets/Point.png" id="1_b4ur3"]
+[ext_resource type="Script" uid="uid://cxjdnqwyjflv0" path="res://scripts/Balloons.gd" id="1_l5vd0"]
+[ext_resource type="Texture2D" uid="uid://dsfrsxvu7pa08" path="res://assets/Balloons.png" id="2_l5vd0"]
+[ext_resource type="Texture2D" uid="uid://bb2erlkiosy5g" path="res://assets/Coin.png" id="3_x0nb1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4cshw"]
+size = Vector2(94, 143)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rbbck"]
+size = Vector2(72, 62)
+
+[node name="Balloons" type="Node2D"]
+script = ExtResource("1_l5vd0")
+
+[node name="Point" type="Sprite2D" parent="."]
+texture = ExtResource("1_b4ur3")
+
+[node name="Flowers" type="Sprite2D" parent="."]
+position = Vector2(1, -35)
+texture = ExtResource("2_l5vd0")
+
+[node name="Coin" type="Sprite2D" parent="."]
+position = Vector2(18, -1)
+texture = ExtResource("3_x0nb1")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="FlowerBarrier" type="StaticBody2D" parent="."]
+position = Vector2(282, 678)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerBarrier"]
+position = Vector2(-284, -715.5)
+shape = SubResource("RectangleShape2D_4cshw")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_rbbck")

@@ -5,11 +5,12 @@ extends Node2D
 var player_near := false
 
 @onready var size_panel: Sprite2D = $BubbleUI/SizePanel
-
+@onready var station_barrier: StaticBody2D = $StationBarrier
 
 func _ready():
 	size_panel.visible = false
-	
+	station_barrier.set_collision_layer_value(1, true)
+	station_barrier.set_collision_mask_value(1, true)
 	# Центр екрана
 	size_panel.position = get_viewport_rect().size / 2
 

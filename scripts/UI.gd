@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node2D
 
 const GAP := 20.0
 
@@ -8,35 +8,42 @@ const GAP := 20.0
 
 func _ready():
 
-	# Число вирівнюємо по правому краю
+	money_label.text = str(GameManager.money)
+
+	# Вирівнюємо цифри по правому краю
 	money_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
-	# Фіксована ширина для Label,
-	# щоб він міг показувати різну кількість цифр
-	money_label.size.x = 100
+	# Область Label
+	money_label.size = Vector2(80, 24)
 
-	update_money()
+	# Чорні цифри
+	money_label.add_theme_color_override(
+		"font_color",
+		Color.BLACK
+	)
+
+	# Розмір самих цифр
+	money_label.add_theme_font_size_override(
+		"font_size",
+		25
+	)
+
+	update_money_position()
 
 
 func _process(_delta):
 
-	update_money()
-
-
-func update_money():
-
-	# Оновлюємо число
 	money_label.text = str(GameManager.money)
 
-	# Ліва межа монетки
-	var coin_left = coin.position.x
+	update_money_position()
 
-	if coin.texture != null:
-		coin_left -= (coin.texture.get_width() * coin.scale.x) / 2.0
 
-	# Правий край тексту = 20 px лівіше монетки
-	var text_right = coin_left - GAP
+func update_money_position():
 
-	# Оскільки текст вирівняний вправо,
-	# рухаємо весь Label так, щоб його правий край був тут
-	money_label.position.x = text_right - money_label.size.x
+	# Правий край Label на 20 px лівіше від Coin
+	money_label.position.x = (
+		coin.position.x
+		- GAP
+		- money_label.size.x
+	)
+	money_label.position.y = -20

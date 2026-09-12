@@ -5,10 +5,12 @@ var player_near := false
 @export var interaction_distance := 100.0
 
 @onready var color_panel: Sprite2D = $BubbleUI/SizePanel
-
+@onready var station_barrier: StaticBody2D = $StationBarrier
 
 func _ready():
 	# Ховаємо меню на початку
+	station_barrier.set_collision_layer_value(1, true)
+	station_barrier.set_collision_mask_value(1, true)
 	color_panel.visible = false
 
 

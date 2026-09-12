@@ -5,12 +5,13 @@ var player_near := false
 @export var interaction_distance := 100.0
 
 @onready var shape_panel: Sprite2D = $BubbleUI/SizePanel
-
+@onready var station_barrier: StaticBody2D = $StationBarrier
 
 func _ready():
 	# Ховаємо меню на початку
 	shape_panel.visible = false
-
+	station_barrier.set_collision_layer_value(1, true)
+	station_barrier.set_collision_mask_value(1, true)
 
 func _process(_delta):
 	var player = get_tree().get_first_node_in_group("player")
