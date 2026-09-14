@@ -35,33 +35,33 @@ script = ExtResource("1_elqb8")
 [node name="Workshop" type="Node2D" parent="."]
 
 [node name="DecorationSpot" parent="Workshop" instance=ExtResource("3_mwfav")]
-position = Vector2(-87, -84)
+position = Vector2(183, 261)
 
 [node name="TrashBin" parent="Workshop" instance=ExtResource("13_qmy6f")]
-position = Vector2(21, -104)
+position = Vector2(-100, -85)
 
 [node name="Stations" type="Node2D" parent="Workshop"]
 
 [node name="BubbleStation" parent="Workshop/Stations" instance=ExtResource("2_0bbpv")]
-position = Vector2(294, -129)
-
-[node name="ShapeStation" parent="Workshop/Stations" instance=ExtResource("4_nxtc6")]
-position = Vector2(135, -127)
+position = Vector2(267, -121)
 
 [node name="CustomerCounter" parent="Workshop/Stations" instance=ExtResource("3_c01mt")]
-position = Vector2(-368, 16)
+position = Vector2(-393, 45)
 
 [node name="PainterStation" parent="Workshop/Stations" instance=ExtResource("5_jlsqs")]
-position = Vector2(456, -128)
+position = Vector2(461, -122)
 
 [node name="Cater" parent="Workshop/Stations" instance=ExtResource("8_mwfav")]
-position = Vector2(-209, -83)
+position = Vector2(64, 256)
 
 [node name="Balloons" parent="Workshop/Stations" instance=ExtResource("9_3p2gp")]
-position = Vector2(448, 195)
+position = Vector2(433, 251)
 
 [node name="Candies" parent="Workshop/Stations" instance=ExtResource("10_cvmbd")]
-position = Vector2(311, 198)
+position = Vector2(303, 257)
+
+[node name="ShapeStation" parent="Workshop/Stations" instance=ExtResource("4_nxtc6")]
+position = Vector2(76, -114)
 
 [node name="Floor" type="Node2D" parent="Workshop"]
 z_index = -10

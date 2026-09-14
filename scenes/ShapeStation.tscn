@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bix7wac1ynuds"]
+[gd_scene load_steps=57 format=3 uid="uid://bix7wac1ynuds"]
 
 [ext_resource type="Script" uid="uid://dobj1ehepcmej" path="res://scripts/ShapeStation.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bjl4b4o235262" path="res://assets/ShapeStation.png" id="2_btju7"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cear2oh31vu5f" path="res://assets/ShapeStation_heart.png" id="5_qbvbo"]
 [ext_resource type="Texture2D" uid="uid://bc48qx4w1wpc5" path="res://assets/ShapeStation_star.png" id="6_4n00w"]
 [ext_resource type="Texture2D" uid="uid://i2longp8ptt1" path="res://assets/cross.png" id="7_tgtka"]
+[ext_resource type="Texture2D" uid="uid://d356h45yyi1ga" path="res://assets/Point2.png" id="8_qbvbo"]
+[ext_resource type="Texture2D" uid="uid://bb2erlkiosy5g" path="res://assets/Coin.png" id="9_4n00w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdxuq"]
 size = Vector2(198, 215)
@@ -102,10 +104,14 @@ size = Vector2(198, 215)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_btju7"]
 size = Vector2(149, 155)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26cr3"]
+size = Vector2(145, 79)
+
 [node name="ShapeStation" type="Node2D"]
 script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Shop" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_btju7")
 
 [node name="InteractionArea" type="Area2D" parent="."]
@@ -202,6 +208,26 @@ position = Vector2(282, 678)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StationBarrier"]
 position = Vector2(-283.5, -677.5)
 shape = SubResource("RectangleShape2D_btju7")
+
+[node name="Point" type="Sprite2D" parent="."]
+position = Vector2(3, 37)
+texture = ExtResource("8_qbvbo")
+
+[node name="Coin" type="Sprite2D" parent="."]
+position = Vector2(25, 34)
+texture = ExtResource("9_4n00w")
+
+[node name="PointArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PointArea"]
+position = Vector2(1, 36)
+shape = SubResource("RectangleShape2D_26cr3")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -12.0
+offset_top = 23.0
+offset_right = 28.0
+offset_bottom = 46.0
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]

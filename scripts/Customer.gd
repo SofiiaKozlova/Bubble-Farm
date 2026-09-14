@@ -29,7 +29,8 @@ var customer_counter = null
 @onready var sprite4: AnimatedSprite2D = $AnimatedSprite2D4
 
 # Текст замовлення
-@onready var order_label: Label = $Label
+@onready var order_cloud: Sprite2D = $OrderCloud
+@onready var bubble_preview: Node2D = $OrderCloud/BubblePreview
 
 
 const SIZES = [
@@ -65,7 +66,7 @@ func _ready():
 	customer_counter = get_tree().get_first_node_in_group("customer_counter")
 
 	# Замовлення спочатку приховане
-	order_label.visible = false
+	order_cloud.visible = false
 
 
 # --------------------------------------------------
@@ -129,15 +130,24 @@ func get_active_sprite() -> AnimatedSprite2D:
 func generate_order():
 
 	order_size = SIZES.pick_random()
-	order_shape = SHAPES.pick_random()
-	order_color = COLORS.pick_random()
 
-	order_label.text = (
-		order_size
-		+ ", "
-		+ order_shape
-		+ ", "
-		+ order_color
+	# Форма доступна тільки після покупки Shape Shop
+	if GameManager.shape_shop_unlocked:
+		order_shape = SHAPES.pick_random()
+	else:
+		order_shape = "circle"
+
+	# Колір доступний тільки після покупки Color Shop
+	if GameManager.color_shop_unlocked:
+		order_color = COLORS.pick_random()
+	else:
+		order_color = "blue"
+
+	# Передаємо замовлення у хмарку
+	bubble_preview.set_order(
+		order_size,
+		order_shape,
+		order_color
 	)
 
 	print(
@@ -148,7 +158,6 @@ func generate_order():
 		" / ",
 		order_color
 	)
-
 
 # --------------------------------------------------
 # ОСНОВНИЙ ЦИКЛ
@@ -180,22 +189,15 @@ func move_to_counter():
 	# Якщо дійшов
 	if distance <= 3.0:
 
-		# Точна позиція
 		global_position = target_position
-
-		# Повністю зупиняємо CharacterBody2D
 		velocity = Vector2.ZERO
-
-		# Змінюємо стан
 		state = "waiting"
 
-		# Вмикаємо idle_right
 		play_idle_right()
 
-		# Показуємо замовлення
-		order_label.visible = true
+		# Показуємо хмарку із замовленням
+		order_cloud.visible = true
 
-		# Повідомляємо стійку
 		if customer_counter != null:
 			customer_counter.customer_arrived(self)
 
@@ -289,7 +291,34 @@ func move_to_exit():
 # --------------------------------------------------
 # ПЕРЕВІРКА БУЛЬБАШКИ
 # --------------------------------------------------
+func calculate_bubble_price(size: String, shape: String, color: String) -> int:
 
+	var total := 0
+
+	# Базова ціна за розмір
+	match size:
+		"small":
+			total = 2
+
+		"medium":
+			total = 4
+
+		"large":
+			total = 6
+
+
+	# Додаткова ціна за форму
+	if shape != "circle":
+		total += 2
+
+
+	# Додаткова ціна за колір
+	if color != "blue":
+		total += 2
+
+
+	return total
+	
 func receive_bubble(player, bubble) -> bool:
 
 	var bubble_size = bubble.get_size_name()
@@ -339,11 +368,18 @@ func receive_bubble(player, bubble) -> bool:
 		bubble.position = Vector2(0, -40)
 
 	# Прибираємо текст замовлення
-	order_label.visible = false
+	order_cloud.visible = false
 
 	# Даємо гроші
-	GameManager.money += 10
+	var payment = calculate_bubble_price(
+	bubble_size,
+	bubble_shape,
+	bubble_color
+)
 
+	GameManager.money += payment
+
+	print("Payment: ", payment)
 	print("Money: ", GameManager.money)
 
 	# Клієнт іде вниз

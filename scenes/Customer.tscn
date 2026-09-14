@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bxp5w2y445ail"]
+[gd_scene load_steps=36 format=3 uid="uid://bxp5w2y445ail"]
 
 [ext_resource type="Texture2D" uid="uid://wlirujsyr3fu" path="res://assets/customers/customer_1/idle_down.png" id="1_0vnnx"]
 [ext_resource type="Script" uid="uid://dmunbd10gq1fd" path="res://scripts/Customer.gd" id="1_qbs0a"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://chf83gurnba2d" path="res://assets/customers/customer_4/walk_right/2.png" id="25_318wp"]
 [ext_resource type="Texture2D" uid="uid://bawjq8qk014o8" path="res://assets/customers/customer_4/walk_down/2.png" id="26_nuxh6"]
 [ext_resource type="Texture2D" uid="uid://b72vn0enx7fc0" path="res://assets/customers/customer_4/walk_down/3.png" id="27_kow68"]
+[ext_resource type="Texture2D" uid="uid://brw3hi8xgg7id" path="res://assets/cloud.png" id="29_85mns"]
+[ext_resource type="Script" uid="uid://sye615xx1tp3" path="res://scripts/BubblePreview.gd" id="30_lwf3r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_61doa"]
 size = Vector2(32, 81)
@@ -269,10 +271,6 @@ position = Vector2(0, -35)
 sprite_frames = SubResource("SpriteFrames_8i6j8")
 animation = &"idle_right"
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 visible = false
 sprite_frames = SubResource("SpriteFrames_vyivy")
@@ -289,3 +287,12 @@ frame_progress = 0.283179
 visible = false
 sprite_frames = SubResource("SpriteFrames_a14b0")
 animation = &"idle_right"
+
+[node name="OrderCloud" type="Sprite2D" parent="."]
+position = Vector2(72, -56)
+texture = ExtResource("29_85mns")
+
+[node name="BubblePreview" type="Node2D" parent="OrderCloud"]
+script = ExtResource("30_lwf3r")
+
+[node name="Polygon2D" type="Polygon2D" parent="OrderCloud/BubblePreview"]
