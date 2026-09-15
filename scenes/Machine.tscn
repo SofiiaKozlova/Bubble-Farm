@@ -1,3 +1,122 @@
-[gd_scene format=3 uid="uid://ih325bqdstpq"]
+[gd_scene load_steps=14 format=3 uid="uid://ih325bqdstpq"]
+
+[ext_resource type="Texture2D" uid="uid://cijidtc0xhmgl" path="res://assets/car/car_move1.png" id="1_b7q23"]
+[ext_resource type="Texture2D" uid="uid://bq17g25pgnlmt" path="res://assets/car/car_move5.png" id="2_p3t3n"]
+[ext_resource type="Texture2D" uid="uid://cu285rasatfd3" path="res://assets/car/car_move4.png" id="3_6rwjc"]
+[ext_resource type="Texture2D" uid="uid://cc3gejv18uth7" path="res://assets/car/car_move3.png" id="4_i4o5h"]
+[ext_resource type="Texture2D" uid="uid://bryxd54e373u0" path="res://assets/car/car_move2.png" id="5_hdt3s"]
+[ext_resource type="Texture2D" uid="uid://dis8qy72fthp4" path="res://assets/car/car_stopped.png" id="6_wm1s7"]
+[ext_resource type="Texture2D" uid="uid://dmo5ul3jcir6q" path="res://assets/car/cloud2.png" id="7_5bhyn"]
+[ext_resource type="Texture2D" uid="uid://bx7f6v5dh6r4f" path="res://assets/Drink.png" id="8_i6ye3"]
+[ext_resource type="Texture2D" uid="uid://dpwxbugysxxav" path="res://assets/Ice.png" id="9_iv2ep"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fgqr2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_b7q23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_p3t3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6rwjc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_i4o5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hdt3s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_i4o5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6rwjc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_p3t3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_b7q23")
+}],
+"loop": true,
+"name": &"Moving_ahead",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kt2o0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_wm1s7")
+}],
+"loop": true,
+"name": &"Stopped_car",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_olcut"]
+size = Vector2(362.5, 167.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjkmg"]
+size = Vector2(277, 109)
 
 [node name="Machine" type="Node2D"]
+
+[node name="Moving_back" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fgqr2")
+animation = &"Moving_ahead"
+
+[node name="Stopped_car" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kt2o0")
+animation = &"Stopped_car"
+
+[node name="Moving_ahead" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fgqr2")
+animation = &"Moving_ahead"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(114, -24.875)
+shape = SubResource("RectangleShape2D_olcut")
+
+[node name="Cloud" type="Node2D" parent="."]
+
+[node name="cloud_sprite" type="Sprite2D" parent="Cloud"]
+position = Vector2(124, -38)
+texture = ExtResource("7_5bhyn")
+
+[node name="Drinks" type="Node2D" parent="Cloud"]
+
+[node name="Icon" type="Sprite2D" parent="Cloud/Drinks"]
+position = Vector2(106, -39)
+scale = Vector2(0.685185, 0.685185)
+texture = ExtResource("8_i6ye3")
+
+[node name="CountLabel" type="Label" parent="Cloud/Drinks"]
+offset_left = 74.0
+offset_top = -47.0
+offset_right = 94.0
+offset_bottom = -24.0
+
+[node name="Ice" type="Node2D" parent="Cloud"]
+
+[node name="Icon" type="Sprite2D" parent="Cloud/Ice"]
+position = Vector2(163, -35)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("9_iv2ep")
+
+[node name="CountLabel" type="Label" parent="Cloud/Ice"]
+offset_left = 129.0
+offset_top = -47.0
+offset_right = 141.0
+offset_bottom = -24.0
+
+[node name="StationBarrier" type="StaticBody2D" parent="."]
+position = Vector2(282, 678)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StationBarrier"]
+position = Vector2(-210.5, -693.5)
+shape = SubResource("RectangleShape2D_rjkmg")
