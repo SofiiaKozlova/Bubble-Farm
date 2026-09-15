@@ -1,0 +1,191 @@
+[gd_scene load_steps=45 format=3 uid="uid://ccp4fmk0ho2do"]
+
+[ext_resource type="Texture2D" uid="uid://c8ljo7osnceo2" path="res://assets/IceDrinkStation.png" id="1_0qf1o"]
+[ext_resource type="Script" uid="uid://6b5rdkh0gdte" path="res://scripts/DrinkStation.gd" id="1_ku6cj"]
+[ext_resource type="Texture2D" uid="uid://cw3ll6brvkwil" path="res://assets/Panel.png" id="2_ku6cj"]
+[ext_resource type="Texture2D" uid="uid://bn2rf4o2kdlf1" path="res://assets/DrinkButton.png" id="4_ku6cj"]
+[ext_resource type="Texture2D" uid="uid://b4chckyygemrn" path="res://assets/IceButton.png" id="5_1mb7s"]
+[ext_resource type="Texture2D" uid="uid://i2longp8ptt1" path="res://assets/cross.png" id="5_pmvyb"]
+[ext_resource type="Texture2D" uid="uid://d356h45yyi1ga" path="res://assets/Point2.png" id="6_jksei"]
+[ext_resource type="Texture2D" uid="uid://bb2erlkiosy5g" path="res://assets/Coin.png" id="7_comm6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7se2h"]
+size = Vector2(179, 189)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pubai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_22emt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s662s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hkfq3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kog3g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jm44n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xbmq4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kg36t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mauba"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pvoos"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ve8t5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0unro"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_82vaq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_psaba"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qruil"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h415c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hhexy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsw1q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0ptx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tuwag"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_56cqv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fvcct"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sdp8h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_la847"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kwpcf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kbhde"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6gqnv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cipfe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wmi0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thw4v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ln378"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wm2pv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qgr8y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7n5cj"]
+size = Vector2(149, 155)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4ndy"]
+size = Vector2(145, 79)
+
+[node name="DrinkStation" type="Node2D"]
+script = ExtResource("1_ku6cj")
+
+[node name="Shop" type="Sprite2D" parent="."]
+texture = ExtResource("1_0qf1o")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-1.5, -0.5)
+shape = SubResource("RectangleShape2D_7se2h")
+
+[node name="BubbleUI" type="CanvasLayer" parent="."]
+
+[node name="SizePanel" type="Sprite2D" parent="BubbleUI"]
+position = Vector2(593, 342)
+texture = ExtResource("2_ku6cj")
+
+[node name="DrinkButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 16.0
+offset_top = -53.0
+offset_right = 126.0
+offset_bottom = 76.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pubai")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_22emt")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_s662s")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hkfq3")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_kog3g")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_jm44n")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xbmq4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_kg36t")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mauba")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_pvoos")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ve8t5")
+icon = ExtResource("4_ku6cj")
+metadata/_edit_use_anchors_ = true
+
+[node name="IceButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = -148.0
+offset_top = -52.0
+offset_right = -38.0
+offset_bottom = 77.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0unro")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_82vaq")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_psaba")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_qruil")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_h415c")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_hhexy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jsw1q")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_v0ptx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tuwag")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_56cqv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fvcct")
+icon = ExtResource("5_1mb7s")
+metadata/_edit_use_anchors_ = true
+
+[node name="CloseButton" type="Button" parent="BubbleUI/SizePanel"]
+offset_left = 185.0
+offset_top = -145.0
+offset_right = 225.0
+offset_bottom = -105.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sdp8h")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_la847")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_kwpcf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_kbhde")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_6gqnv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_cipfe")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8wmi0")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_thw4v")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ln378")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_wm2pv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qgr8y")
+icon = ExtResource("5_pmvyb")
+metadata/_edit_use_anchors_ = true
+
+[node name="StationBarrier" type="StaticBody2D" parent="."]
+position = Vector2(282, 678)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StationBarrier"]
+position = Vector2(-283.5, -677.5)
+shape = SubResource("RectangleShape2D_7n5cj")
+
+[node name="Point" type="Sprite2D" parent="."]
+position = Vector2(3, 37)
+texture = ExtResource("6_jksei")
+
+[node name="Coin" type="Sprite2D" parent="."]
+position = Vector2(25, 34)
+texture = ExtResource("7_comm6")
+
+[node name="PointArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PointArea"]
+position = Vector2(1, 36)
+shape = SubResource("RectangleShape2D_w4ndy")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -12.0
+offset_top = 23.0
+offset_right = 28.0
+offset_bottom = 46.0
+
+[connection signal="pressed" from="BubbleUI/SizePanel/DrinkButton" to="." method="_on_drink_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/IceButton" to="." method="_on_ice_button_pressed"]
+[connection signal="pressed" from="BubbleUI/SizePanel/CloseButton" to="." method="_on_close_button_pressed"]
