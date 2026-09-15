@@ -280,23 +280,17 @@ func buy_shop():
 
 func show_shop():
 
-	print("Drink Station: UNLOCKED")
-
-
 	point.visible = false
 	coin.visible = false
 	price_label.visible = false
 
 	shop.visible = true
 
-
 	point_area.set_deferred("monitoring", false)
 	point_area.set_deferred("monitorable", false)
 
-
 	interaction_area.set_deferred("monitoring", true)
 	interaction_area.set_deferred("monitorable", true)
-
 
 	station_barrier.set_collision_layer_value(1, true)
 	station_barrier.set_collision_mask_value(1, true)

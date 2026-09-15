@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bxp5w2y445ail"]
+[gd_scene load_steps=37 format=3 uid="uid://bxp5w2y445ail"]
 
 [ext_resource type="Texture2D" uid="uid://wlirujsyr3fu" path="res://assets/customers/customer_1/idle_down.png" id="1_0vnnx"]
 [ext_resource type="Script" uid="uid://dmunbd10gq1fd" path="res://scripts/Customer.gd" id="1_qbs0a"]
@@ -255,6 +255,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwf3r"]
+size = Vector2(152, 138)
+
 [node name="Customer" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
@@ -296,3 +299,10 @@ texture = ExtResource("29_85mns")
 script = ExtResource("30_lwf3r")
 
 [node name="Polygon2D" type="Polygon2D" parent="OrderCloud/BubblePreview"]
+
+[node name="StationBarrier" type="StaticBody2D" parent="."]
+position = Vector2(282, 678)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StationBarrier"]
+position = Vector2(-237, -695)
+shape = SubResource("RectangleShape2D_lwf3r")

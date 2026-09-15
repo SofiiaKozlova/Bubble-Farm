@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://be3n4ovq4xwce"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Title" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="PlayButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ExitButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0

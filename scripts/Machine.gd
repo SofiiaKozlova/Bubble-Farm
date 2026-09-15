@@ -5,69 +5,96 @@ extends Node2D
 # НАЛАШТУВАННЯ
 # =========================================================
 
-@export var speed := 120.0
+@export var speed: float = 120.0
 
-# Звідки приїжджає машина
-@export var spawn_position := Vector2(-650, 300)
+# На скільки пікселів машина приїжджає вправо
+@export var travel_distance: float = 150.0
 
-# Де машина зупиняється
-@export var stop_position := Vector2(-300, 300)
-
-# Куди їде після виконання замовлень
-@export var exit_position := Vector2(1300, 300)
-
-# Час між приїздами машин
-@export var min_wait_time := 8.0
-@export var max_wait_time := 15.0
-
-
-const DRINK_PRICE := 10
-const ICE_PRICE := 9
+# Час очікування ДО НАСТУПНОЇ МАШИНИ
+@export var min_wait_time: float = 10.0
+@export var max_wait_time: float = 15.0
 
 
 # =========================================================
-# ПОСИЛАННЯ НА ВУЗЛИ
+# ЦІНИ
 # =========================================================
 
-@onready var moving_ahead: AnimatedSprite2D = $Moving_ahead
+const DRINK_PRICE: int = 10
+const ICE_PRICE: int = 9
+
+
+# =========================================================
+# ВУЗЛИ
+# =========================================================
+
 @onready var moving_back: AnimatedSprite2D = $Moving_back
 @onready var stopped_car: AnimatedSprite2D = $Stopped_car
+@onready var moving_ahead: AnimatedSprite2D = $Moving_ahead
 
 @onready var delivery_area: Area2D = $Area2D
 
 @onready var cloud: Node2D = $Cloud
 
 @onready var drinks: Node2D = $Cloud/Drinks
-@onready var drink_icon: AnimatedSprite2D = $Cloud/Drinks/Icon
 @onready var drink_count_label: Label = $Cloud/Drinks/CountLabel
 
 @onready var ice: Node2D = $Cloud/Ice
-@onready var ice_icon: AnimatedSprite2D = $Cloud/Ice/Icon
 @onready var ice_count_label: Label = $Cloud/Ice/CountLabel
 
 @onready var cloud_sprite: Sprite2D = $Cloud/cloud_sprite
 
 
 # =========================================================
-# СТАН МАШИНИ
+# СТАНИ
 # =========================================================
 
-enum MachineState {
+enum MachineState
+{
 	WAITING,
 	DRIVING_IN,
 	STOPPED,
 	DRIVING_OUT
 }
 
-var state := MachineState.WAITING
+var state: MachineState = MachineState.WAITING
 
-var player_near := false
 
-var drink_order_amount := 0
-var ice_order_amount := 0
+# =========================================================
+# ПОЗИЦІЇ
+# =========================================================
 
-var machine_started := false
+# Місце, де машина стоїть у редакторі
+var start_position: Vector2
 
+# Місце, куди вона приїжджає
+var stop_position: Vector2
+
+
+# =========================================================
+# ЗАМОВЛЕННЯ
+# =========================================================
+
+var drink_order_amount: int = 0
+var ice_order_amount: int = 0
+
+# Загальна виплата за все замовлення
+var total_payment: int = 0
+
+
+# =========================================================
+# ІНШІ ЗМІННІ
+# =========================================================
+
+# Чи зараз машина активна
+var machine_started: bool = false
+
+# Чи знаходиться гравець біля машини
+var player_near: bool = false
+
+# Чи очікуємо наступну машину
+var waiting_for_next_machine: bool = false
+
+# Таймер
 var wait_timer: Timer
 
 
@@ -76,31 +103,71 @@ var wait_timer: Timer
 # =========================================================
 
 func _ready():
+
 	randomize()
 
-	# Спочатку машина схована
+	# -----------------------------------------------------
+	# ЧОРНИЙ ТЕКСТ
+	# -----------------------------------------------------
+
+	drink_count_label.add_theme_color_override(
+		"font_color",
+		Color.BLACK
+	)
+
+	ice_count_label.add_theme_color_override(
+		"font_color",
+		Color.BLACK
+	)
+
+
+	# -----------------------------------------------------
+	# ЗАПАМ'ЯТОВУЄМО ПОЗИЦІЮ З РЕДАКТОРА
+	# -----------------------------------------------------
+
+	start_position = global_position
+
+	stop_position = start_position + Vector2(
+		travel_distance,
+		0.0
+	)
+
+
+	# -----------------------------------------------------
+	# ПОЧАТКОВИЙ СТАН
+	# -----------------------------------------------------
+
 	visible = false
 
-	# Хмарка схована
 	cloud.visible = false
 
-	# Усі три варіанти машини
 	moving_ahead.visible = false
-	moving_back.visible = false
 	stopped_car.visible = false
+	moving_back.visible = false
 
-	# Таймер
+
+	# -----------------------------------------------------
+	# ТАЙМЕР
+	# -----------------------------------------------------
+
 	wait_timer = Timer.new()
+
 	wait_timer.one_shot = true
+
 	add_child(wait_timer)
 
-	wait_timer.timeout.connect(_on_wait_timer_timeout)
+	wait_timer.timeout.connect(
+		_on_wait_timer_timeout
+	)
 
-	# Перевіряємо, чи вже куплений магазин
+
+	# -----------------------------------------------------
+	# ЯКЩО МАГАЗИН ВЖЕ КУПЛЕНИЙ
+	# -----------------------------------------------------
+
 	if GameManager.drink_shop_unlocked:
+
 		start_machine()
-	else:
-		state = MachineState.WAITING
 
 
 # =========================================================
@@ -108,72 +175,156 @@ func _ready():
 # =========================================================
 
 func _process(delta):
-	# Якщо магазин ще не куплений
-	# машина нічого не робить
+
+
+	# =====================================================
+	# DRINK STATION ЩЕ НЕ КУПЛЕНИЙ
+	# =====================================================
+
 	if not GameManager.drink_shop_unlocked:
+
 		visible = false
+
 		machine_started = false
+
+		waiting_for_next_machine = false
+
+		state = MachineState.WAITING
+
+		global_position = start_position
+
 		return
 
-	# Якщо магазин щойно купили
+
+	# =====================================================
+	# МАШИНА НЕ АКТИВНА
+	# =====================================================
+
 	if not machine_started:
+
+		# Якщо ми просто чекаємо наступну машину,
+		# НЕ запускаємо її раніше таймера
+		if waiting_for_next_machine:
+
+			return
+
+		# Якщо таймер не працює і треба почати нову машину
 		start_machine()
+
 		return
+
+
+	# =====================================================
+	# СТАН МАШИНИ
+	# =====================================================
 
 	match state:
 
+
+		# -------------------------------------------------
+		# ЇДЕ ВПРАВО
+		# -------------------------------------------------
+
 		MachineState.DRIVING_IN:
+
 			move_inside(delta)
 
+
+		# -------------------------------------------------
+		# СТОЇТЬ
+		# -------------------------------------------------
+
 		MachineState.STOPPED:
-			check_delivery()
+
+			update_player_near()
+
+			# Передача ТІЛЬКИ після E
+			if player_near:
+
+				if Input.is_action_just_pressed("interact"):
+
+					check_delivery()
+
+
+		# -------------------------------------------------
+		# ЇДЕ НАЗАД
+		# -------------------------------------------------
 
 		MachineState.DRIVING_OUT:
+
 			move_outside(delta)
 
 
 # =========================================================
-# ЗАПУСК МАШИНИ
+# ПОЧАТОК ПРИЇЗДУ
 # =========================================================
 
 func start_machine():
+
 	if machine_started:
+
 		return
 
+	if waiting_for_next_machine:
+
+		return
+
+
+	# Машина тепер активна
 	machine_started = true
 
+	# Вона починає з початкової точки
+	global_position = start_position
+
+	# Показуємо машину
 	visible = true
 
-	global_position = spawn_position
-
+	# Створюємо замовлення
 	generate_orders()
 
-	show_driving_ahead()
+	# Запускаємо рух вперед
+	show_moving_ahead()
 
+	# Змінюємо стан
 	state = MachineState.DRIVING_IN
+
+	print("Машина почала їхати вперед")
 
 
 # =========================================================
-# СТВОРЕННЯ 2 ЗАМОВЛЕНЬ
+# СТВОРЕННЯ ЗАМОВЛЕННЯ
 # =========================================================
 
 func generate_orders():
 
-	# Одне замовлення Drink
+	# Drink від 1 до 3
 	drink_order_amount = randi_range(1, 3)
 
-	# Одне замовлення Ice
+	# Ice від 1 до 3
 	ice_order_amount = randi_range(1, 3)
 
-	print("--------------------------------")
-	print("НОВА МАШИНА")
-	print("Drink: ", drink_order_amount)
-	print("Ice: ", ice_order_amount)
-	print("--------------------------------")
 
+	# -----------------------------------------------------
+	# РАХУЄМО ЗАГАЛЬНУ ВИПЛАТУ
+	# -----------------------------------------------------
+
+	total_payment = (
+		drink_order_amount * DRINK_PRICE
+		+ ice_order_amount * ICE_PRICE
+	)
+
+
+	# Оновлюємо вміст хмарки
+	# але сама хмарка поки прихована
 	update_order_cloud()
 
-	cloud.visible = true
+
+	print("--------------------------------")
+	print("НОВЕ ЗАМОВЛЕННЯ МАШИНИ")
+	print("Drink: ", drink_order_amount)
+	print("Ice: ", ice_order_amount)
+	print("Загальна виплата: ", total_payment)
+	print("--------------------------------")
 
 
 # =========================================================
@@ -182,118 +333,189 @@ func generate_orders():
 
 func update_order_cloud():
 
-	# -------------------------
+	# =====================================================
 	# DRINK
-	# -------------------------
+	# =====================================================
 
 	if drink_order_amount > 0:
+
 		drinks.visible = true
+
 		drink_count_label.visible = true
-		drink_count_label.text = str(drink_order_amount)
+
+		drink_count_label.text = str(
+			drink_order_amount
+		)
+
 	else:
+
 		drinks.visible = false
 
+		drink_count_label.visible = false
 
-	# -------------------------
+
+	# =====================================================
 	# ICE
-	# -------------------------
+	# =====================================================
 
 	if ice_order_amount > 0:
+
 		ice.visible = true
+
 		ice_count_label.visible = true
-		ice_count_label.text = str(ice_order_amount)
+
+		ice_count_label.text = str(
+			ice_order_amount
+		)
+
 	else:
+
 		ice.visible = false
 
+		ice_count_label.visible = false
 
-	# Якщо все виконано
-	if drink_order_amount <= 0 and ice_order_amount <= 0:
-		cloud.visible = false
+
+	# =====================================================
+	# ЯКЩО ВСЕ ВИКОНАНО
+	# =====================================================
+
+	if drink_order_amount <= 0:
+
+		if ice_order_amount <= 0:
+
+			cloud.visible = false
 
 
 # =========================================================
-# РУХ ВПРАВО
+# МАШИНА ЇДЕ ВПРАВО
 # =========================================================
 
 func move_inside(delta):
 
 	global_position.x += speed * delta
 
+
 	if global_position.x >= stop_position.x:
 
-		global_position.x = stop_position.x
+		# Точно ставимо машину на потрібну позицію
+		global_position = stop_position
 
+		# Перемикаємо на стоячу машину
 		show_stopped()
 
+		# Тепер хмарка з'являється
+		cloud.visible = true
+
+		# Машина тепер стоїть
 		state = MachineState.STOPPED
 
-		print("Машина приїхала")
+		print("Машина зупинилась")
 
 
 # =========================================================
-# РУХ НАЗАД / ВЛІВО
+# МАШИНА ЇДЕ НАЗАД
 # =========================================================
 
 func move_outside(delta):
 
-	global_position.x += speed * delta
-
-	# Тут ми використовуємо від'ємний speed,
-	# тому машина їде вліво
-
 	global_position.x -= speed * delta
 
-	if global_position.x <= exit_position.x:
+
+	# Повернулася у вихідну точку
+	if global_position.x <= start_position.x:
+
+		global_position = start_position
+
 		finish_machine()
 
 
 # =========================================================
-# АНІМАЦІЇ
+# АНІМАЦІЯ РУХУ ВПЕРЕД
 # =========================================================
 
-func show_driving_ahead():
+func show_moving_ahead():
 
 	moving_ahead.visible = true
-	moving_back.visible = false
 	stopped_car.visible = false
+	moving_back.visible = false
 
-	moving_ahead.play("default")
+	# Запускаємо анімацію
+	moving_ahead.play()
 
+
+# =========================================================
+# АНІМАЦІЯ СТОЯННЯ
+# =========================================================
 
 func show_stopped():
 
 	moving_ahead.visible = false
-	moving_back.visible = false
 	stopped_car.visible = true
+	moving_back.visible = false
 
-	stopped_car.play("default")
-
-
-func show_driving_back():
-
-	moving_ahead.visible = false
-	moving_back.visible = true
-	stopped_car.visible = false
-
-	moving_back.play("default")
+	# Запускаємо анімацію
+	stopped_car.play()
 
 
 # =========================================================
-# ПЕРЕВІРКА ПРИНЕСЕНОГО ПРЕДМЕТА
+# АНІМАЦІЯ РУХУ НАЗАД
+# =========================================================
+
+func show_moving_back():
+
+	moving_ahead.visible = false
+	stopped_car.visible = false
+	moving_back.visible = true
+
+	# Запускаємо анімацію
+	moving_back.play()
+
+
+# =========================================================
+# ПЕРЕВІРКА ГРАВЦЯ
+# =========================================================
+
+func update_player_near():
+
+	player_near = false
+
+	var bodies = delivery_area.get_overlapping_bodies()
+
+
+	for body in bodies:
+
+		if body.is_in_group("player"):
+
+			player_near = true
+
+			return
+
+
+# =========================================================
+# ПЕРЕДАЧА ПРЕДМЕТА
 # =========================================================
 
 func check_delivery():
 
 	var player = get_tree().get_first_node_in_group("player")
 
+
 	if player == null:
+
 		return
 
-	# Якщо гравець нічого не тримає
+
+	# -----------------------------------------------------
+	# ГРАВЕЦЬ НІЧОГО НЕ ТРИМАЄ
+	# -----------------------------------------------------
+
 	if player.carried_product == "":
+
+		print("Гравець нічого не тримає")
+
 		return
 
-	# Що зараз у руках
+
 	var product: String = player.carried_product
 
 
@@ -303,30 +525,37 @@ func check_delivery():
 
 	if product == "drink":
 
-		if drink_order_amount > 0:
+		if drink_order_amount <= 0:
 
-			# Забираємо напій
-			player.clear_carried_product()
-
-			# Зменшуємо замовлення
-			drink_order_amount -= 1
-
-			# Гроші
-			GameManager.money += DRINK_PRICE
-
-			print("Drink доставлено!")
-			print("+", DRINK_PRICE, " грошей")
-			print("Залишилось Drink: ", drink_order_amount)
-
-			update_order_cloud()
-
-			check_orders_completed()
+			print("Машина більше не просить Drink")
 
 			return
 
-		else:
-			print("Машина зараз не просить Drink")
-			return
+
+		# Прибираємо напій з рук
+		player.clear_carried_product()
+
+		# Зменшуємо кількість
+		drink_order_amount -= 1
+
+
+		print("Drink доставлено!")
+
+		print(
+			"Drink залишилось: ",
+			drink_order_amount
+		)
+
+
+		# Оновлюємо хмарку
+		update_order_cloud()
+
+
+		# Перевіряємо, чи все виконано
+		check_orders_completed()
+
+
+		return
 
 
 	# =====================================================
@@ -335,47 +564,84 @@ func check_delivery():
 
 	if product == "ice":
 
-		if ice_order_amount > 0:
+		if ice_order_amount <= 0:
 
-			# Забираємо лід
-			player.clear_carried_product()
-
-			# Зменшуємо замовлення
-			ice_order_amount -= 1
-
-			# Гроші
-			GameManager.money += ICE_PRICE
-
-			print("Ice доставлено!")
-			print("+", ICE_PRICE, " грошей")
-			print("Залишилось Ice: ", ice_order_amount)
-
-			update_order_cloud()
-
-			check_orders_completed()
+			print("Машина більше не просить Ice")
 
 			return
 
-		else:
-			print("Машина зараз не просить Ice")
-			return
+
+		# Прибираємо лід з рук
+		player.clear_carried_product()
+
+		# Зменшуємо кількість
+		ice_order_amount -= 1
+
+
+		print("Ice доставлено!")
+
+		print(
+			"Ice залишилось: ",
+			ice_order_amount
+		)
+
+
+		# Оновлюємо хмарку
+		update_order_cloud()
+
+
+		# Перевіряємо, чи все виконано
+		check_orders_completed()
+
+
+		return
+
+
+	# =====================================================
+	# ІНШИЙ ПРЕДМЕТ
+	# =====================================================
+
+	print("Цей предмет машина не замовляла")
 
 
 # =========================================================
-# ПЕРЕВІРКА, ЧИ ВСІ ЗАМОВЛЕННЯ ВИКОНАНІ
+# ПЕРЕВІРКА ВИКОНАННЯ
 # =========================================================
 
 func check_orders_completed():
 
-	if drink_order_amount <= 0 and ice_order_amount <= 0:
+	if drink_order_amount <= 0:
 
-		print("--------------------------------")
-		print("ВСІ ЗАМОВЛЕННЯ ВИКОНАНІ!")
-		print("--------------------------------")
+		if ice_order_amount <= 0:
 
-		cloud.visible = false
+			print("--------------------------------")
+			print("ВСІ ЗАМОВЛЕННЯ ВИКОНАНІ!")
+			print(
+				"Виплата: ",
+				total_payment
+			)
+			print("--------------------------------")
 
-		start_leaving()
+
+			# -------------------------------------------------
+			# ГРОШІ ВИДАЮТЬСЯ ТІЛЬКИ ЗАРАЗ
+			# -------------------------------------------------
+
+			GameManager.money += total_payment
+
+
+			print(
+				"Отримано грошей: ",
+				total_payment
+			)
+
+
+			# Ховаємо хмарку
+			cloud.visible = false
+
+
+			# Машина починає їхати назад
+			start_leaving()
 
 
 # =========================================================
@@ -386,31 +652,70 @@ func start_leaving():
 
 	state = MachineState.DRIVING_OUT
 
-	show_driving_back()
+	show_moving_back()
 
 	print("Машина їде назад")
 
 
 # =========================================================
-# ЗАВЕРШЕННЯ
+# МАШИНА ПОВЕРНУЛАСЯ У СТАРТОВУ ТОЧКУ
 # =========================================================
 
 func finish_machine():
 
-	print("Машина виїхала")
+	print("Машина повністю виїхала")
+
+
+	# -----------------------------------------------------
+	# ХОВАЄМО МАШИНУ
+	# -----------------------------------------------------
 
 	visible = false
 
-	state = MachineState.WAITING
+
+	# -----------------------------------------------------
+	# СКИДАЄМО СТАН
+	# -----------------------------------------------------
 
 	machine_started = false
 
-	# Новий приїзд через випадковий час
-	var wait_time := randf_range(min_wait_time, max_wait_time)
+	state = MachineState.WAITING
+
+	player_near = false
+
+
+	# -----------------------------------------------------
+	# ПОВЕРТАЄМО В ПОЧАТКОВУ ПОЗИЦІЮ
+	# -----------------------------------------------------
+
+	global_position = start_position
+
+
+	# -----------------------------------------------------
+	# ТЕПЕР ПОЧИНАЄМО ОЧІКУВАННЯ
+	# -----------------------------------------------------
+
+	waiting_for_next_machine = true
+
+
+	# Випадково від 10 до 15 секунд
+	var wait_time: float = randf_range(
+		min_wait_time,
+		max_wait_time
+	)
+
 
 	wait_timer.start(wait_time)
 
-	print("Наступна машина через ", wait_time, " секунд")
+
+	print("--------------------------------")
+	print(
+		"Машина виїхала.",
+		" Наступна приїде через ",
+		wait_time,
+		" секунд."
+	)
+	print("--------------------------------")
 
 
 # =========================================================
@@ -419,6 +724,11 @@ func finish_machine():
 
 func _on_wait_timer_timeout():
 
+	# Тепер очікування закінчилося
+	waiting_for_next_machine = false
+
+
+	# Якщо Drink Station все ще куплений
 	if GameManager.drink_shop_unlocked:
 
 		start_machine()

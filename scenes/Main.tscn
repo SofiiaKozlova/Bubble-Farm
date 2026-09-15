@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b15rw2j3yvqg1"]
+[gd_scene load_steps=23 format=3 uid="uid://b15rw2j3yvqg1"]
 
 [ext_resource type="Script" uid="uid://bkhgpbtafo4ak" path="res://scripts/Main.gd" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://exriuqnijb1a" path="res://scenes/BubbleStation.tscn" id="2_0bbpv"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dlu8qkx4qb2ev" path="res://scenes/MoneyCloud.tscn" id="10_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://ccp4fmk0ho2do" path="res://scenes/DrinkStation.tscn" id="11_ft6cd"]
 [ext_resource type="Script" uid="uid://cgcvhbpkdgic2" path="res://scripts/CustomerManager.gd" id="11_wp0k4"]
+[ext_resource type="PackedScene" uid="uid://ih325bqdstpq" path="res://scenes/Machine.tscn" id="12_bb450"]
 [ext_resource type="PackedScene" uid="uid://bxp5w2y445ail" path="res://scenes/Customer.tscn" id="12_bjd11"]
 [ext_resource type="PackedScene" uid="uid://nysffvduxdpo" path="res://scenes/TrashBin.tscn" id="13_qmy6f"]
 
@@ -67,10 +68,14 @@ position = Vector2(76, -114)
 [node name="DrinkStation" parent="Workshop/Stations" instance=ExtResource("11_ft6cd")]
 position = Vector2(-110, -113)
 
+[node name="Machine" parent="Workshop/Stations" instance=ExtResource("12_bb450")]
+position = Vector2(-638, -176)
+
 [node name="Floor" type="Node2D" parent="Workshop"]
 z_index = -10
 
 [node name="Sprite2D" type="Sprite2D" parent="Workshop/Floor"]
+visible = false
 z_index = -1
 position = Vector2(58, 1)
 scale = Vector2(0.828141, 0.634167)
